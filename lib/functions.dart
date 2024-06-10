@@ -62,3 +62,28 @@ class SwitchT extends StatelessWidget {
     );
   }
 }
+
+class ParkingSlot extends StatelessWidget {
+  final int x;
+  final int carCount;
+  const ParkingSlot({super.key, required this.carCount, required this.x});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(10),
+      width: 180,
+      height: 120,
+      decoration: BoxDecoration(
+          border: Border.all(color: Colors.greenAccent),
+          borderRadius: BorderRadius.circular(20)),
+      child: (carCount >= x)
+          ? Image.asset("assets/car.png")
+          : const Center(
+              child: Text(
+              'Parking Slot Available',
+              style: TextStyle(color: Colors.green),
+            )),
+    );
+  }
+}

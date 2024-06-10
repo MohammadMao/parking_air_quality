@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart'; // for Icons
 import 'package:parking_air_quality/door_control.dart';
 import 'package:parking_air_quality/fan_control.dart';
-import 'functions.dart';
 
 void main() {
   runApp(const MyApp());
@@ -36,13 +35,6 @@ class _MyHomePageState extends State<MyHomePage>
     tabController = TabController(length: 2, vsync: this);
     super.initState();
   }
-
-  bool fanAutoOn = true;
-  bool doorAutoOn = true;
-  bool doorOpened = false; // will change depending on server info
-  bool fanOn = false; // will change depending on server info
-  double co2 = 100; // will change depending on server info
-  double tvoc = 525; // will change depending on server info
 
   @override
   Widget build(BuildContext context) {

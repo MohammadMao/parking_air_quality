@@ -10,58 +10,97 @@ class DoorControl extends StatefulWidget {
 }
 
 class _DoorControlState extends State<DoorControl> {
-  bool doorAutoOn = true;
-  bool doorOpened = false; // will change depending on server info
+  bool doorOpenedOut = false;
+  bool doorOpenedIn = false;
+  int carCount = 4; // will change depending on server info
 
   @override
   Widget build(BuildContext context) {
-    return ListView(padding: const EdgeInsets.only(top: 20), children: [
-      Column(
-        children: [
-          const Text(
-            'Door Control',
-            style: TextStyle(
-              color: Colors.amber,
-              fontSize: 27,
-              fontWeight: FontWeight.bold,
+    return Padding(
+      padding: const EdgeInsets.all(10),
+      child: ListView(padding: const EdgeInsets.only(top: 20), children: [
+        Column(
+          children: [
+            const Text(
+              'Door Control',
+              style: TextStyle(
+                color: Colors.amber,
+                fontSize: 27,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-          ),
-          const SizedBox(height: 15), //مساحة بين العناصر
-          SwitchT(
-            // DoorAutoMode Switch
-            boolval: doorAutoOn,
-            txt: 'Automatic Mode',
-            ico: Icon(
-              FontAwesomeIcons.robot,
-              size: 40,
-              color: Colors.grey[500],
+            const SizedBox(height: 15), //مساحة بين العناصر
+            const Text(
+              'Get Car IN',
+              style: TextStyle(
+                color: Colors.teal,
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-            valueChanged: (val) {
-              setState(() {
-                doorAutoOn = val;
-              });
-            },
-            sub: const Text(
-                'Enabling this option allows sensors to control the door automatically'),
-          ),
-          SwitchT(
-              // Door Switch
-              valueChanged: doorAutoOn
-                  ? null
-                  : (val) {
-                      setState(() {
-                        doorOpened = val;
-                      });
-                    },
-              boolval: doorOpened,
-              txt: 'Open / Closed',
-              ico: Icon(
-                FontAwesomeIcons.doorOpen,
-                size: 40,
-                color: Colors.grey[500],
-              )), //استدعاء عداد للغاز
-        ],
-      )
-    ]);
+            SwitchT(
+                txt: doorOpenedIn ? 'Opened' : 'Closed',
+                ico: Icon(
+                  FontAwesomeIcons.doorOpen,
+                  size: 40,
+                  color: Colors.grey[500],
+                ),
+                boolval: doorOpenedIn,
+                valueChanged: (carCount < 4)
+                    ? (val) {
+                        setState(() {
+                          doorOpenedIn = val;
+                        });
+                      }
+                    : null),
+            const SizedBox(height: 15), //مساحة بين العناصر
+            const Text(
+              'Get Car OUT',
+              style: TextStyle(
+                color: Colors.teal,
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SwitchT(
+                // Door Switch (out)
+                valueChanged: (carCount < 1)
+                    ? (val) {
+                        setState(() {
+                          doorOpenedOut = false;
+                        });
+                      }
+                    : (val) {
+                        setState(() {
+                          doorOpenedOut = val;
+                        });
+                      },
+                boolval: doorOpenedOut,
+                txt: doorOpenedOut ? 'Opened' : 'Closed',
+                ico: Icon(
+                  FontAwesomeIcons.doorOpen,
+                  size: 40,
+                  color: Colors.grey[500],
+                )), //استدعاء عداد للغاز
+            const SizedBox(height: 30),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ParkingSlot(carCount: carCount, x: 1),
+                ParkingSlot(carCount: carCount, x: 2)
+              ],
+            ),
+            const SizedBox(height: 20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ParkingSlot(carCount: carCount, x: 3),
+                ParkingSlot(carCount: carCount, x: 4)
+              ],
+            ),
+          ],
+        )
+      ]),
+    );
   }
 }
