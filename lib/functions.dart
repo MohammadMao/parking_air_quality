@@ -57,6 +57,7 @@ class SwitchT extends StatelessWidget {
         onChanged: valueChanged,
         secondary: ico,
         activeColor: Colors.green,
+        activeTrackColor: Colors.green[100],
       ),
     );
   }
