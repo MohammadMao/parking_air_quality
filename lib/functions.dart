@@ -3,16 +3,18 @@ import 'package:syncfusion_flutter_gauges/gauges.dart'; // for Gauges/Meters
 
 class SFG extends StatelessWidget {
   final double gas;
+  final double max;
 
-  const SFG({super.key, required this.gas});
+  const SFG({super.key, required this.gas, required this.max});
 
   @override
   Widget build(BuildContext context) {
     return SfRadialGauge(axes: <RadialAxis>[
-      RadialAxis(minimum: 0, maximum: 1000, ranges: <GaugeRange>[
-        GaugeRange(startValue: 0, endValue: 333, color: Colors.green),
-        GaugeRange(startValue: 334, endValue: 666, color: Colors.orange),
-        GaugeRange(startValue: 667, endValue: 1000, color: Colors.red)
+      RadialAxis(minimum: 0, maximum: max, ranges: <GaugeRange>[
+        GaugeRange(startValue: 0, endValue: max / 3, color: Colors.green),
+        GaugeRange(
+            startValue: max / 3, endValue: max * 2 / 3, color: Colors.orange),
+        GaugeRange(startValue: max * 2 / 3, endValue: max, color: Colors.red)
       ], pointers: <GaugePointer>[
         NeedlePointer(value: gas)
       ], annotations: <GaugeAnnotation>[
@@ -56,7 +58,8 @@ class SwitchT extends StatelessWidget {
         value: boolval,
         onChanged: valueChanged,
         secondary: ico,
-        activeColor: Colors.green,
+        activeColor: Colors.green[600],
+        inactiveThumbColor: Colors.green[300],
       ),
     );
   }
