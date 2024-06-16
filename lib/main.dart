@@ -4,6 +4,7 @@ import 'functions.dart';
 import 'mqtt/mqtt_manager.dart';
 import 'mqtt/mqtt_state.dart';
 import 'package:provider/provider.dart';
+import 'widgets.dart';
 import 'mqtt/setters.dart';
 
 void main() {
@@ -38,7 +39,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   void initState() {
-    test();
+    initConn();
     super.initState();
   }
 
@@ -47,12 +48,11 @@ class _MyHomePageState extends State<MyHomePage> {
     super.dispose();
   }
 
-  void test() {
+  void initConn() {
     final MQTTAppState appState =
         Provider.of<MQTTAppState>(context, listen: false);
     // Keep a reference to the app state.
     currentAppState = appState;
-    // _configureAndConnect();
     currentAppState.getAppConnectionState == MQTTAppConnectionState.disconnected
         ? _configureAndConnect()
         : null;
@@ -61,38 +61,19 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     bool autoOn = true;
-    bool doorOpened = doorval; // will change depending on server info
-    bool fanOn = fanval; // will change depending on server info
-    double co = coval; // will change depending on server info
-    double smoke = smokeval; // will change depending on server info
+    bool doorOpened = doorval; // depending on server info
+    bool fanOn = fanval; // depending on server info
+    double co = coval; // depending on server info
+    double smoke = smokeval; // depending on server info
 
     return Scaffold(
-      appBar: AppBar(
-          backgroundColor: Colors.teal,
-          title: const Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                Icons.car_repair,
-                color: Colors.white,
-                size: 30,
-              ),
-              SizedBox(width: 5),
-              Text(
-                'Parking Air Quality',
-                style: TextStyle(
-                    fontSize: 24,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold),
-              ),
-            ],
-          )),
+      appBar: appbar(),
       body: ListView(padding: const EdgeInsets.only(top: 10), children: [
         Column(
           children: [
             Container(
               padding: const EdgeInsets.fromLTRB(0, 10, 0, 20),
-              color: Colors.grey[200],
+              color: const Color.fromARGB(255, 238, 255, 251),
               child: Column(
                 children: [
                   const Text(
@@ -172,32 +153,48 @@ class _MyHomePageState extends State<MyHomePage> {
                       });
                     },
             ),
-            const SizedBox(height: 25), //مساحة بين العناصر
-            const Text(
-              'CO',
-              style: TextStyle(
-                color: Colors.amber,
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
+            const SizedBox(height: 20), //مساحة بين العناصر
+            Container(
+              color: const Color.fromARGB(255, 238, 255, 251),
+              child: Column(
+                children: [
+                  const SizedBox(height: 25), //مساحة بين العناصر
+                  const Text(
+                    'CO',
+                    style: TextStyle(
+                      color: Colors.amber,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SFG(
+                    gas: co,
+                    max: 66,
+                  ), //استدعاء عداد للغاز
+                ],
               ),
             ),
-            SFG(
-              gas: co,
-              max: 66,
-            ), //استدعاء عداد للغاز
-            const SizedBox(height: 25), //مساحة بين العناصر
-            const Text(
-              'SMOKE',
-              style: TextStyle(
-                color: Colors.amber,
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
+
+            Container(
+              color: const Color.fromARGB(255, 231, 255, 250),
+              child: Column(
+                children: [
+                  const SizedBox(height: 25), //مساحة بين العناصر
+                  const Text(
+                    'SMOKE',
+                    style: TextStyle(
+                      color: Colors.amber,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SFG(
+                    gas: smoke,
+                    max: 33,
+                  ), //استدعاء عداد للغاز
+                ],
               ),
-            ),
-            SFG(
-              gas: smoke,
-              max: 33,
-            ), //استدعاء عداد للغاز
+            )
           ],
         )
       ]),
@@ -210,7 +207,7 @@ class _MyHomePageState extends State<MyHomePage> {
     manager.connect();
   }
 
-  void _disconnect() {
-    manager.disconnect();
-  }
+  // void _disconnect() {
+  //   manager.disconnect();
+  // }
 }
