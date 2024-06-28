@@ -60,7 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    bool autoOn = true;
+    bool autoOn = fanMode;
     bool doorOpened = doorval; // depending on server info
     bool fanOn = fanval; // depending on server info
     double co = coval; // depending on server info
@@ -128,6 +128,9 @@ class _MyHomePageState extends State<MyHomePage> {
               valueChanged: (val) {
                 setState(() {
                   autoOn = val;
+                  (autoOn)
+                      ? manager.publish('1', 'control/fan')
+                      : manager.publish('0', 'control/fan');
                 });
               },
               sub: const Text(
@@ -148,8 +151,8 @@ class _MyHomePageState extends State<MyHomePage> {
                       setState(() {
                         fanOn = val;
                         (fanOn)
-                            ? manager.publish('working', 'fan/status')
-                            : manager.publish('not working', 'fan/status');
+                            ? manager.publish('1', 'control/fan/manual')
+                            : manager.publish('0', 'control/fan/manual');
                       });
                     },
             ),

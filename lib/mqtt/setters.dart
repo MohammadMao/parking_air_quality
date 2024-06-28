@@ -4,6 +4,7 @@ double coval = 0;
 bool doorval = false;
 double smokeval = 0;
 bool fanval = false;
+bool fanMode = false;
 
 void setSmoke(String smoke) {
   smokeval = double.parse(smoke);
@@ -23,4 +24,8 @@ void setDoor(String door) {
 void setFan(String fan) {
   fanval = (fan == 'not working') ? false : true;
   // print(fanval);
+}
+
+void setFanMode(String mode) {
+  fanMode = (mode == '1') ? true : false;
 }

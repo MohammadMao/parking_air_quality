@@ -9,10 +9,12 @@ class MqttManager {
   final MQTTAppState _currentState;
   MqttServerClient? _client;
   // final String _identifier;
-  final String _coTopic = 'level/co';
-  final String _smokeTopic = 'level/smoke';
+  final String _coTopic = 'co/level';
+  final String _smokeTopic = 'smoke/level';
   final String _fanTopic = 'fan/status';
   final String _doorTopic = 'door/status';
+  final String _fanmodeTopic = 'control/fan';
+  // final String _manualFanTopic = 'control/fan/manual';
   final String host = 'broker.hivemq.com';
   final String clientId = 'MqttDashboard-9925752';
   final String username = 'IOT_Park';
@@ -90,6 +92,7 @@ class MqttManager {
     _client!.subscribe(_smokeTopic, MqttQos.atLeastOnce);
     _client!.subscribe(_doorTopic, MqttQos.atLeastOnce);
     _client!.subscribe(_fanTopic, MqttQos.atLeastOnce);
+    _client!.subscribe(_fanmodeTopic, MqttQos.atLeastOnce);
 
     // Listen to updates from the client
     _client!.updates!.listen((List<MqttReceivedMessage<MqttMessage?>>? c) {
@@ -107,7 +110,7 @@ class MqttManager {
         setDoor(message);
       } else if (topic == _fanTopic) {
         setFan(message);
-      }
+      } else if (topic == _fanmodeTopic) {}
 
       print(
           'EXAMPLE::Change notification:: topic is <$topic>, payload is <-- $message -->');
