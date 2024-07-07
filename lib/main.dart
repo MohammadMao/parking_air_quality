@@ -76,6 +76,7 @@ class _MyHomePageState extends State<MyHomePage> {
     bool fanOn = provider.fanval;
     double co = provider.coval;
     double smoke = provider.smokeval;
+    bool airQuality = (co > 35 || smoke > 12);
 
     return Scaffold(
         appBar: appbar(),
@@ -85,7 +86,7 @@ class _MyHomePageState extends State<MyHomePage> {
               Container(
                 // Door Status
                 padding: const EdgeInsets.fromLTRB(0, 10, 0, 20),
-                color: const Color.fromARGB(255, 238, 255, 251),
+                color: const Color.fromARGB(255, 248, 255, 253),
                 child: Column(
                   children: [
                     const Text(
@@ -97,7 +98,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ),
                     const SizedBox(height: 15), //مساحة بين العناصر
-                    StatusCard(doorStatus: doorOpened),
+                    DoorStatusCard(doorStatus: doorOpened),
                   ],
                 ),
               ),
@@ -150,6 +151,10 @@ class _MyHomePageState extends State<MyHomePage> {
                         });
                       },
               ),
+              const SizedBox(height: 20), //مساحة بين العناصر
+
+              // AirQuality Status Card
+              AirStatusCard(airQuality: airQuality),
               const SizedBox(height: 20), //مساحة بين العناصر
 
               // Gas Meters

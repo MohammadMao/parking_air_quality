@@ -14,7 +14,7 @@ class SFG extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: const Color.fromARGB(255, 231, 255, 250),
+      color: const Color.fromARGB(255, 248, 255, 253),
       child: Column(
         children: [
           const SizedBox(height: 25), //مساحة بين العناصر
@@ -109,9 +109,9 @@ class SwitchT extends StatelessWidget {
 }
 
 // Door Status Card
-class StatusCard extends StatelessWidget {
+class DoorStatusCard extends StatelessWidget {
   final bool doorStatus;
-  const StatusCard({super.key, required this.doorStatus});
+  const DoorStatusCard({super.key, required this.doorStatus});
 
   @override
   Widget build(BuildContext context) {
@@ -152,6 +152,63 @@ class StatusCard extends StatelessWidget {
                     ),
                     Text(
                       'CLOSED',
+                      style: TextStyle(
+                          color: Color.fromARGB(255, 255, 76, 76),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 25),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+    );
+  }
+}
+
+// AirQuality Status Card
+class AirStatusCard extends StatelessWidget {
+  final bool airQuality;
+  const AirStatusCard({super.key, required this.airQuality});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: (!airQuality)
+          ? SizedBox(
+              height: 100,
+              child: Card(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Icon(
+                      FontAwesomeIcons.wind,
+                      size: 60,
+                      color: Colors.green[400],
+                    ),
+                    Text(
+                      'Air Quality: GOOD',
+                      style: TextStyle(
+                          color: Colors.green[400],
+                          fontWeight: FontWeight.bold,
+                          fontSize: 25),
+                    ),
+                  ],
+                ),
+              ),
+            )
+          : const SizedBox(
+              height: 100,
+              child: Card(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Icon(
+                      FontAwesomeIcons.wind,
+                      size: 60,
+                      color: Color.fromARGB(255, 255, 76, 76),
+                    ),
+                    Text(
+                      'Air Quality: POOR',
                       style: TextStyle(
                           color: Color.fromARGB(255, 255, 76, 76),
                           fontWeight: FontWeight.bold,
