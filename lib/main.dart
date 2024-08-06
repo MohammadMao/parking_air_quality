@@ -97,12 +97,30 @@ class _MyHomePageState extends State<MyHomePage> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    const SizedBox(height: 15), //مساحة بين العناصر
-                    DoorStatusCard(doorStatus: doorOpened),
+                    const SizedBox(height: 15),
+                    SwitchT(
+                        // Door Switch
+                        valueChanged: (val) {
+                          setState(() {
+                            doorOpened = val;
+                            (doorOpened)
+                                ? manager.publish('open', 'door/status')
+                                : manager.publish('close', 'door/status');
+                          });
+                        },
+                        boolval: doorOpened,
+                        txt: (doorOpened) ? 'Opened' : 'Closed',
+                        ico: Icon(
+                          FontAwesomeIcons.doorOpen,
+                          size: 40,
+                          color: (doorOpened)
+                              ? Colors.green[400]
+                              : Colors.grey[500],
+                        )),
                   ],
                 ),
               ),
-              const SizedBox(height: 30), //مساحة بين العناصر
+              const SizedBox(height: 30),
               const Text(
                 'FAN CONTROL',
                 style: TextStyle(
@@ -151,11 +169,11 @@ class _MyHomePageState extends State<MyHomePage> {
                         });
                       },
               ),
-              const SizedBox(height: 20), //مساحة بين العناصر
+              const SizedBox(height: 20),
 
               // AirQuality Status Card
               AirStatusCard(airQuality: airQuality),
-              const SizedBox(height: 20), //مساحة بين العناصر
+              const SizedBox(height: 20),
 
               // Gas Meters
               SFG(gas: co, max: 66, name: 'CO'),
@@ -171,8 +189,4 @@ class _MyHomePageState extends State<MyHomePage> {
     manager.connect();
     manager.client!.onConnected = () => manager.onConnected(context);
   }
-
-  // void _disconnect() {
-  //   manager.disconnect();
-  // }
 }

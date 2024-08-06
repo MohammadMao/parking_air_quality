@@ -1,6 +1,7 @@
-// ignore_for_file: avoid_print
+// This file is for managing MQTT
 
 import 'package:flutter/material.dart';
+import 'dart:developer' as developer;
 import 'package:mqtt_client/mqtt_client.dart';
 import 'package:mqtt_client/mqtt_server_client.dart';
 import 'package:provider/provider.dart';
@@ -19,11 +20,11 @@ class MqttManager {
   final String _fanmodeTopic = 'control/fan';
   // final String _manualFanTopic = 'control/fan/manual';
 
-  // server info
-  final String host = 'broker.hivemq.com';
-  final String clientId = 'MqttDashboard-9925752';
-  final String username = 'IOT_Park';
-  final String password = 'Parkin1234';
+  // server info here
+  final String host = '';
+  final String clientId = '';
+  final String username = '';
+  final String password = '';
 
   // client get
   MqttServerClient? get client => _client;
@@ -34,13 +35,11 @@ class MqttManager {
   MqttManager({required MQTTAppState state}) : _currentState = state;
 
   void initializeMQTTClient(BuildContext context) {
-    // _client = MqttServerClient(host, _identifier);
     _client = MqttServerClient.withPort(host, clientId, 1883);
     _client!.port = 1883;
     _client!.keepAlivePeriod = 10;
     _client!.onDisconnected = onDisconnected;
     _client!.logging(on: false);
-    // _client!.secure = false; // for secure connection
 
     // Add the successful connection callback
     _client!.onConnected = () => onConnected(context);
@@ -51,7 +50,7 @@ class MqttManager {
           .withWillTopic('lastwills')
           .withWillMessage('Will message')
           .withWillQos(MqttQos.atLeastOnce);
-    print('EXAMPLE: client connecting....');
+    developer.log('## client connecting....');
     _client!.connectionMessage = connMess;
   }
 
@@ -59,18 +58,18 @@ class MqttManager {
   void connect() async {
     assert(_client != null);
     try {
-      print('## start client connecting....');
+      developer.log('## start client connecting....');
       _currentState.setAppConnectionState(MQTTAppConnectionState.connecting);
       await _client!.connect();
     } on Exception catch (e) {
-      print('## client exception - $e');
+      developer.log('## client exception - $e');
       disconnect();
     }
   }
 
   // disconnect function
   void disconnect() {
-    print('Disconnected');
+    developer.log('Disconnected');
     _client!.disconnect();
   }
 
@@ -83,15 +82,15 @@ class MqttManager {
 
   /// The subscribed callback
   void onSubscribed(String topic) {
-    print('EXAMPLE::Subscription confirmed for topic $topic');
+    developer.log('## Subscription confirmed for topic $topic');
   }
 
   /// The unsolicited disconnect callback
   void onDisconnected() {
-    print('EXAMPLE::OnDisconnected client callback - Client disconnection');
+    developer.log('## OnDisconnected client callback - Client disconnection');
     if (_client!.connectionStatus!.returnCode ==
         MqttConnectReturnCode.noneSpecified) {
-      print('EXAMPLE::OnDisconnected callback is solicited, this is correct');
+      developer.log('## OnDisconnected callback is solicited, this is correct');
     }
     _currentState.setAppConnectionState(MQTTAppConnectionState.disconnected);
   }
@@ -99,7 +98,7 @@ class MqttManager {
   /// The successful connect callback
   void onConnected(BuildContext context) async {
     _currentState.setAppConnectionState(MQTTAppConnectionState.connected);
-    print('## client connected....');
+    developer.log('## client connected....');
     _provider = Provider.of<Inputs>(context, listen: false);
 
     // Subscribe to all topics
@@ -129,11 +128,12 @@ class MqttManager {
         _provider.updateMode(message);
       }
 
-      print('topic is <$topic>, payload is <-- $message -->');
-      print('');
+      developer.log('topic is <$topic>, payload is <-- $message -->');
+      developer.log('');
     });
 
-    print('## OnConnected client callback - Client connection was successful');
+    developer.log(
+        '## OnConnected client callback - Client connection was successful');
 
     // _client!.disconnect();
   }
