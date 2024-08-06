@@ -1,16 +1,13 @@
 # parking_air_quality
 
-Home parking and air quality monitoring system
+This is a Home Parking and Air Quality Monitoring System.
+Users can monitor and modify the parking door, fan, and air quality status.
 
-## Getting Started
+## Used in this project
+* Flutter
+* MQTT Server
+* Arduino
+* MQ-135 Gas Sensor
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## App Preview
+![previewimg1](./preview/PAQ(1).png) ![previewimg2](./preview/PAQ(2).png)
