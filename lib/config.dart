@@ -1,4 +1,5 @@
 import 'package:flutter/services.dart';
+import 'dart:developer' as developer;
 
 class EnvConfig {
   static late String host;
@@ -25,7 +26,7 @@ class EnvConfig {
       clientId = 'flutter_client';
       username = '';
       password = '';
-      print('Warning: Could not load .env file. Using default values.');
+      developer.log('Warning: Could not load .env file. Using default values.');
     }
   }
 
