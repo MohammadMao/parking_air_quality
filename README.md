@@ -83,5 +83,8 @@ Before running the Flutter app, you need to configure the MQTT connection settin
 ## Contributing
 Contributions are welcome! Please feel free to open issues or submit pull requests.
 
+
 ## App Preview
-![previewimg1](./preview/PAQ(1).png) ![previewimg2](./preview/PAQ(2).png)
+
+<img width="1668" height="1280" alt="-2147483648_-211778" src="https://github.com/user-attachments/assets/106cd94f-9d26-437d-b16d-04011e28aba8" />
+
