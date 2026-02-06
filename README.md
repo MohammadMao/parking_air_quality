@@ -49,7 +49,36 @@ Air Quality Visualization: Provides visual cues indicating good or poor air qual
 * **Configure WiFi and MQTT:** Update the Arduino code with your WiFi credentials and MQTT broker details.
 * **Install Flutter:** Download and install Flutter from https://flutter.dev/.
 * **Install Dependencies:** Run flutter pub get to install the Flutter dependencies.
-* **Run the Application:** Run the Flutter app on your device or emulator.
+
+### Flutter App Configuration (Important)
+Before running the Flutter app, you need to configure the MQTT connection settings:
+
+1. **Copy the environment template:**
+   ```bash
+   cp .env.example .env
+   ```
+
+2. **Edit the `.env` file** with your MQTT broker details:
+   ```
+   MQTT_HOST=your_mqtt_broker_address
+   MQTT_PORT=1883
+   MQTT_CLIENT_ID=parking_air_quality_client
+   MQTT_USERNAME=your_username
+   MQTT_PASSWORD=your_password
+   ```
+
+   - **MQTT_HOST:** The address of your MQTT broker (e.g., `broker.example.com` or IP address)
+   - **MQTT_PORT:** The port your MQTT broker is running on (default is 1883)
+   - **MQTT_CLIENT_ID:** A unique identifier for this client
+   - **MQTT_USERNAME:** Username for MQTT broker authentication
+   - **MQTT_PASSWORD:** Password for MQTT broker authentication
+
+3. **Run the Application:** Run the Flutter app on your device or emulator.
+   ```bash
+   flutter run
+   ```
+
+**Note:** The `.env` file is ignored by git and not included in version control for security reasons. Each developer or deployment must create their own `.env` file with appropriate credentials.
 
 ## Contributing
 Contributions are welcome! Please feel free to open issues or submit pull requests.

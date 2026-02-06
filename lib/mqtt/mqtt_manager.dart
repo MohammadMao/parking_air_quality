@@ -7,6 +7,7 @@ import 'package:mqtt_client/mqtt_server_client.dart';
 import 'package:provider/provider.dart';
 import 'mqtt_state.dart';
 import '../models.dart';
+import '../config.dart';
 
 class MqttManager {
   final MQTTAppState _currentState;
@@ -20,12 +21,6 @@ class MqttManager {
   final String _fanmodeTopic = 'control/fan';
   // final String _manualFanTopic = 'control/fan/manual';
 
-  // server info here
-  final String host = '';
-  final String clientId = '';
-  final String username = '';
-  final String password = '';
-
   // client get
   MqttServerClient? get client => _client;
 
@@ -35,8 +30,8 @@ class MqttManager {
   MqttManager({required MQTTAppState state}) : _currentState = state;
 
   void initializeMQTTClient(BuildContext context) {
-    _client = MqttServerClient.withPort(host, clientId, 1883);
-    _client!.port = 1883;
+    _client = MqttServerClient.withPort(EnvConfig.host, EnvConfig.clientId, EnvConfig.port);
+    _client!.port = EnvConfig.port;
     _client!.keepAlivePeriod = 10;
     _client!.onDisconnected = onDisconnected;
     _client!.logging(on: false);
@@ -46,7 +41,7 @@ class MqttManager {
     _client!.onSubscribed = onSubscribed;
 
     final MqttConnectMessage connMess = MqttConnectMessage()
-      ..authenticateAs(username, password)
+      ..authenticateAs(EnvConfig.username, EnvConfig.password)
           .withWillTopic('lastwills')
           .withWillMessage('Will message')
           .withWillQos(MqttQos.atLeastOnce);
