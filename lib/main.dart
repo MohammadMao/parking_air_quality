@@ -1,27 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart'; // for Icons
-import 'package:parking_air_quality/door_control.dart';
-import 'package:parking_air_quality/fan_control.dart';
+import 'app.dart';
 
 void main() {
   runApp(const MyApp());
 }
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: MyHomePage(title: 'Parking Air Quality'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -95,3 +77,5 @@ class _MyHomePageState extends State<MyHomePage>
         ));
   }
 }
+=======
+>>>>>>> new_branch
